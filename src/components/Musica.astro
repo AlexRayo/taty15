@@ -1,0 +1,108 @@
+---
+// Música de fondo: empieza al abrir el sobre (ver Sobre.astro) y se controla
+// con el botón flotante. El archivo está en public/audio/cancion.mp3
+---
+
+<audio id="musica" src="/audio/cancion.mp3" preload="metadata" loop></audio>
+
+<button
+  id="boton-musica"
+  type="button"
+  aria-label="Pausar música"
+  aria-pressed="true"
+  class="fixed right-4 bottom-4 z-40 grid size-14 translate-y-24 place-items-center rounded-full fondo-oro text-blanco opacity-0 shadow-lg shadow-viejo-oscuro/40 ring-2 ring-blanco/70 transition duration-700 hover:scale-105"
+>
+  <!-- barras animadas (sonando) -->
+  <span class="icono-sonando flex h-5 items-end gap-[3px]" aria-hidden="true">
+    <span class="barra"></span><span class="barra"></span><span class="barra"></span><span class="barra"></span>
+  </span>
+  <!-- play (en pausa) -->
+  <svg class="icono-pausa hidden size-6 translate-x-px" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M8 5.5v13a1 1 0 0 0 1.5.9l10-6.5a1 1 0 0 0 0-1.7l-10-6.6A1 1 0 0 0 8 5.5Z"></path>
+  </svg>
+</button>
+
+<style>
+  .barra {
+    width: 3px;
+    height: 100%;
+    border-radius: 2px;
+    background: currentColor;
+    transform-origin: bottom;
+    animation: eq 1s ease-in-out infinite;
+  }
+  .barra:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  .barra:nth-child(3) {
+    animation-delay: -0.6s;
+  }
+  .barra:nth-child(4) {
+    animation-delay: -0.15s;
+  }
+  #boton-musica.pausado .barra {
+    animation-play-state: paused;
+  }
+  #boton-musica.pausado .icono-sonando {
+    display: none;
+  }
+  #boton-musica.pausado .icono-pausa {
+    display: block;
+  }
+  #boton-musica.mostrar {
+    opacity: 1;
+    translate: 0 0;
+  }
+  @keyframes eq {
+    0%,
+    100% {
+      transform: scaleY(0.3);
+    }
+    50% {
+      transform: scaleY(1);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .barra {
+      animation: none;
+      transform: scaleY(0.7);
+    }
+  }
+</style>
+
+<script>
+  const audio = document.getElementById('musica') as HTMLAudioElement | null;
+  const boton = document.getElementById('boton-musica');
+
+  if (audio && boton) {
+    const pintar = () => {
+      const sonando = !audio.paused;
+      boton.classList.toggle('pausado', !sonando);
+      boton.setAttribute('aria-pressed', String(sonando));
+      boton.setAttribute('aria-label', sonando ? 'Pausar música' : 'Reproducir música');
+    };
+    audio.addEventListener('play', pintar);
+    audio.addEventListener('pause', pintar);
+    pintar();
+
+    boton.addEventListener('click', () => {
+      if (audio.paused) audio.play().catch(() => {});
+      else audio.pause();
+    });
+
+    // El botón aparece cuando se abre la invitación
+    window.addEventListener('invitacion-abierta', () => boton.classList.add('mostrar'));
+
+    // Pausar si el invitado sale de la pestaña y retomar al volver
+    let pausadaPorSalir = false;
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && !audio.paused) {
+        audio.pause();
+        pausadaPorSalir = true;
+      } else if (!document.hidden && pausadaPorSalir) {
+        pausadaPorSalir = false;
+        audio.play().catch(() => {});
+      }
+    });
+  }
+</script>

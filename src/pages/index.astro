@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import Sobre from '../components/Sobre.astro';
+import Musica from '../components/Musica.astro';
 import FloresDefs from '../components/FloresDefs.astro';
 import Flores from '../components/Flores.astro';
 import Adorno from '../components/Adorno.astro';
@@ -27,6 +28,7 @@ const waLink = `https://wa.me/${evento.whatsapp.numero}?text=${encodeURIComponen
 <Layout>
   <FloresDefs />
   <Sobre />
+  <Musica />
 
   <main class="papel relative mx-auto min-h-screen max-w-[480px] overflow-hidden shadow-2xl shadow-viejo-oscuro/40">
     <!-- ============ PORTADA ============ -->

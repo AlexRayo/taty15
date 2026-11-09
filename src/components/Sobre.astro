@@ -131,6 +131,10 @@ import { evento } from '../data/evento';
   sello?.addEventListener('click', () => {
     if (!intro) return;
     intro.classList.add('abierto');
+
+    // La música debe iniciarse dentro del toque para que el celular la permita
+    const musica = document.getElementById('musica') as HTMLAudioElement | null;
+    musica?.play().catch(() => {});
     window.setTimeout(
       () => {
         intro.classList.add('saliendo');
