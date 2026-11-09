@@ -1,0 +1,334 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import Sobre from '../components/Sobre.astro';
+import FloresDefs from '../components/FloresDefs.astro';
+import Flores from '../components/Flores.astro';
+import Adorno from '../components/Adorno.astro';
+import Rasgado from '../components/Rasgado.astro';
+import Icono from '../components/Icono.astro';
+import Cuenta from '../components/Cuenta.astro';
+import Calendario from '../components/Calendario.astro';
+import { evento } from '../data/evento';
+
+import foto1 from '../assets/photos/tatiana-1.jpg';
+import foto2 from '../assets/photos/tatiana-2.jpg';
+import foto3 from '../assets/photos/tatiana-3.jpg';
+import foto4 from '../assets/photos/tatiana-4.jpg';
+import foto5 from '../assets/photos/tatiana-5.jpg';
+import foto6 from '../assets/photos/tatiana-6.jpg';
+import foto7 from '../assets/photos/tatiana-7.jpg';
+
+const galeria = [foto3, foto2, foto5, foto7];
+const alt = `${evento.quinceanera} en su sesión de fotos de XV años`;
+const waLink = `https://wa.me/${evento.whatsapp.numero}?text=${encodeURIComponent(evento.whatsapp.mensaje)}`;
+---
+
+<Layout>
+  <FloresDefs />
+  <Sobre />
+
+  <main class="papel relative mx-auto min-h-screen max-w-[480px] overflow-hidden shadow-2xl shadow-viejo-oscuro/40">
+    <!-- ============ PORTADA ============ -->
+    <header class="relative">
+      <div class="relative aspect-[4/4.6] overflow-hidden">
+        <Image
+          src={foto1}
+          alt={alt}
+          widths={[480, 768, 960]}
+          sizes="(max-width: 480px) 100vw, 480px"
+          class="portada size-full object-cover object-top"
+          loading="eager"
+          fetchpriority="high"
+        />
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#3a2420]/55"></div>
+        <div class="absolute inset-x-0 bottom-14 text-center text-blanco">
+          <p class="font-caps text-xs tracking-[0.45em] uppercase drop-shadow">Mis XV Años</p>
+        </div>
+        <Rasgado />
+      </div>
+
+      <div class="relative px-6 pt-4 pb-10 text-center">
+        <Flores posicion="arriba-der" class="w-36 opacity-90" />
+        <h1 class="relative z-10 font-script text-6xl leading-tight">
+          <span class="texto-oro px-2">{evento.quinceanera}</span>
+        </h1>
+        <p class="relative z-10 mt-1 etiqueta">{evento.ciudad}</p>
+        <Adorno class="mt-6" />
+      </div>
+    </header>
+
+    <!-- ============ MENSAJE ============ -->
+    <section class="revelar relative px-8 pb-12 text-center">
+      {
+        evento.mensajeInicio.map((p) => (
+          <p class="mx-auto mb-4 max-w-sm text-xl leading-relaxed italic text-tinta">{p}</p>
+        ))
+      }
+    </section>
+
+    <!-- ============ PADRES ============ -->
+    <section class="revelar relative px-8 pb-14 text-center">
+      <div class="acuarela top-0 -left-16 size-48 bg-chicle"></div>
+      <p class="relative etiqueta">Con el amor de mis padres</p>
+      <p class="relative mt-4 font-script text-4xl text-viejo-oscuro">{evento.padres.papa}</p>
+      <p class="relative font-script text-3xl text-oro">&amp;</p>
+      <p class="relative font-script text-4xl text-viejo-oscuro">{evento.padres.mama}</p>
+      <p class="relative mx-auto mt-5 max-w-xs text-lg leading-relaxed">
+        tienen el honor de invitarte a celebrar los quince años de su hija
+      </p>
+      <p class="relative mt-2 font-script text-5xl">
+        <span class="texto-oro px-2">{evento.quinceanera}</span>
+      </p>
+    </section>
+
+    <!-- ============ FECHA ============ -->
+    <section class="revelar relative px-6 pb-14 text-center">
+      <Flores posicion="abajo-izq" class="w-32 opacity-80" />
+      <p class="relative etiqueta">A festejar mis</p>
+      <p class="relative mt-1 font-caps text-4xl tracking-[0.2em] text-viejo-oscuro">XV Años</p>
+
+      <div class="relative mt-6 flex items-center justify-center gap-4">
+        <div class="w-24 border-y border-oro/70 py-1.5 font-caps text-xs tracking-[0.2em] uppercase">
+          {evento.fecha.diaSemana}
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="font-script text-3xl text-viejo">{evento.fecha.mes}</span>
+          <span class="font-serif text-7xl leading-none font-medium"><span class="texto-oro">{evento.fecha.dia}</span></span>
+        </div>
+        <div class="w-24 border-y border-oro/70 py-1.5 font-caps text-xs tracking-[0.2em]">
+          {evento.fecha.anio}
+        </div>
+      </div>
+      <p class="relative mt-4 font-caps text-sm tracking-[0.2em] text-tinta-suave">5:00 PM</p>
+
+      <div class="relative mt-10">
+        <Cuenta />
+      </div>
+    </section>
+
+    <!-- ============ FOTO + CALENDARIO ============ -->
+    <section class="revelar relative px-8 pb-14">
+      <div class="relative mx-auto w-4/5 rotate-[-2deg] bg-blanco p-2.5 pb-10 shadow-xl">
+        <Image src={foto4} alt={alt} widths={[400, 800]} sizes="380px" class="aspect-[4/5] w-full object-cover" />
+        <p class="absolute inset-x-0 bottom-2 text-center font-script text-2xl text-viejo">Te espero…</p>
+      </div>
+      <div class="mt-12">
+        <p class="text-center"><span class="titulo-script texto-oro">El gran día</span></p>
+        <div class="mt-4"><Calendario /></div>
+      </div>
+    </section>
+
+    <!-- ============ LUGARES ============ -->
+    <section class="revelar relative bg-chicle-claro/50 px-6 py-14 text-center">
+      <Flores posicion="arriba-izq" class="w-32 opacity-80" />
+      <p class="relative"><span class="titulo-script texto-oro">¿Dónde y cuándo?</span></p>
+      <div class="relative mt-8 grid gap-5">
+        {
+          evento.lugares.map((l) => (
+            <article class="rounded-2xl border border-oro/30 bg-blanco/80 px-6 py-7 shadow-sm">
+              <Icono nombre={l.icono} class="mx-auto size-11 text-oro" />
+              <h3 class="mt-3 font-caps text-sm tracking-[0.2em] text-viejo-oscuro uppercase">{l.titulo}</h3>
+              <p class="mt-2 text-xl leading-snug">{l.lugar}</p>
+              <p class="mt-3 inline-block rounded-full bg-chicle-claro px-4 py-1 font-caps text-sm tracking-[0.15em] text-viejo-oscuro">
+                {l.hora}
+              </p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- ============ ITINERARIO ============ -->
+    <section class="revelar relative px-6 py-14">
+      <Flores posicion="arriba-der" class="w-32 opacity-80" />
+      <p class="relative text-center">
+        <span class="titulo-script texto-oro">Itinerario</span>
+      </p>
+      <p class="relative text-center etiqueta">de actividades</p>
+
+      <ol class="relative mx-auto mt-10 max-w-sm">
+        <span class="absolute top-2 bottom-2 left-1/2 w-px -translate-x-1/2 bg-gradient-to-b from-oro/0 via-oro to-oro/0"></span>
+        {
+          evento.itinerario.map((p, i) => {
+            const izq = i % 2 === 0;
+            return (
+              <li class="relative grid grid-cols-[1fr_auto_1fr] items-center gap-4 py-3">
+                <div class={izq ? 'text-right' : 'flex justify-end'}>
+                  {izq ? (
+                    <>
+                      <p class="font-caps text-sm tracking-[0.1em] text-viejo-oscuro">{p.hora}</p>
+                      <p class="text-lg leading-tight">{p.actividad}</p>
+                    </>
+                  ) : (
+                    <Icono nombre={p.icono} class="size-11 text-viejo" />
+                  )}
+                </div>
+                <span class="relative z-10 size-3 rounded-full bg-oro ring-4 ring-papel" />
+                <div class={izq ? '' : 'text-left'}>
+                  {izq ? (
+                    <Icono nombre={p.icono} class="size-11 text-viejo" />
+                  ) : (
+                    <>
+                      <p class="font-caps text-sm tracking-[0.1em] text-viejo-oscuro">{p.hora}</p>
+                      <p class="text-lg leading-tight">{p.actividad}</p>
+                    </>
+                  )}
+                </div>
+              </li>
+            );
+          })
+        }
+      </ol>
+    </section>
+
+    <!-- ============ GALERÍA ============ -->
+    <section class="revelar relative px-5 pb-14">
+      <Adorno class="mb-8" />
+      <div class="grid grid-cols-2 items-start gap-3">
+        {
+          galeria.map((f, i) => (
+            <button
+              type="button"
+              class={`foto-galeria overflow-hidden rounded-lg shadow-md ring-1 ring-oro/30 ${i % 2 === 1 ? 'mt-8' : ''}`}
+              aria-label="Ver foto en grande"
+            >
+              <Image
+                src={f}
+                alt={alt}
+                widths={[300, 600, 1000]}
+                sizes="(max-width: 480px) 50vw, 230px"
+                class="block aspect-[4/5] w-full object-cover transition duration-700 hover:scale-105"
+              />
+            </button>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- ============ VESTIMENTA ============ -->
+    <section class="revelar relative bg-chicle-claro/50 px-8 py-14 text-center">
+      <Flores posicion="abajo-der" class="w-32 opacity-80" />
+      <p class="relative"><span class="titulo-script texto-oro">Código de vestimenta</span></p>
+      <p class="relative mt-2 font-caps text-xl tracking-[0.3em] text-viejo-oscuro uppercase">{evento.vestimenta.tipo}</p>
+      <div class="relative mt-6 flex justify-center gap-3 text-tinta">
+        <Icono nombre="traje" class="size-16" />
+        <Icono nombre="vestido" class="size-16" />
+      </div>
+      <p class="relative mx-auto mt-6 max-w-xs text-lg leading-relaxed">{evento.vestimenta.nota}</p>
+      <div class="relative mt-5 flex items-center justify-center gap-3" aria-hidden="true">
+        <span class="size-7 rounded-full bg-chicle ring-2 ring-blanco"></span>
+        <span class="size-7 rounded-full fondo-oro ring-2 ring-blanco"></span>
+        <span class="font-caps text-[0.65rem] tracking-[0.2em] text-tinta-suave uppercase">Reservados para Tatiana</span>
+      </div>
+    </section>
+
+    <!-- ============ REGALO ============ -->
+    <section class="revelar relative px-8 py-14 text-center">
+      <p class="font-caps text-xs tracking-[0.3em] text-tinta-suave uppercase">Opción de regalo</p>
+      <p class="mt-1"><span class="titulo-script texto-oro">{evento.regalo.titulo}</span></p>
+      <p class="mx-auto mt-4 max-w-xs text-lg leading-relaxed">{evento.regalo.texto}</p>
+
+      <div class="relative mx-auto mt-8 w-44" style="animation: flotar 4s ease-in-out infinite">
+        <svg viewBox="0 0 200 150" class="w-full" aria-hidden="true">
+          <g fill="#c9a14a">
+            <path d="M40 30l3-8 3 8 8 3-8 3-3 8-3-8-8-3 8-3Z" />
+            <path d="M160 18l2-5 2 5 5 2-5 2-2 5-2-5-5-2 5-2Z" />
+            <circle cx="100" cy="12" r="3" /><circle cx="130" cy="34" r="2" /><circle cx="70" cy="16" r="2" />
+          </g>
+          <rect x="30" y="52" width="140" height="92" rx="6" fill="#f6c3cc" />
+          <path d="M30 58l70 48 70-48" fill="#eeb0bc" />
+          <path d="M30 144l56-44M170 144l-56-44" stroke="#e49fad" stroke-width="2" fill="none" />
+          <path d="M100 98s-18-10-18-22c0-6 4-10 9-10 4 0 7 2 9 5 2-3 5-5 9-5 5 0 9 4 9 10 0 12-18 22-18 22Z" fill="#c48791" />
+          <g fill="#8fa383">
+            <path d="M28 120c-12-4-20 0-24 8 12 4 20 0 24-8Z" />
+            <path d="M34 108c-6-10-14-12-22-10 6 10 14 12 22 10Z" />
+            <path d="M172 120c12-4 20 0 24 8-12 4-20 0-24-8Z" />
+            <path d="M166 108c6-10 14-12 22-10-6 10-14 12-22 10Z" />
+          </g>
+        </svg>
+      </div>
+      <p class="mt-4 font-script text-4xl text-viejo">¡Muchas gracias!</p>
+    </section>
+
+    <!-- ============ CONFIRMAR ============ -->
+    <section class="revelar relative bg-chicle-claro/50 px-8 py-14 text-center">
+      <Flores posicion="arriba-izq" class="w-28 opacity-80" />
+      <Icono nombre="calendario" class="relative mx-auto size-12 text-viejo" />
+      <p class="relative mt-2"><span class="titulo-script texto-oro">Confirma tu asistencia</span></p>
+      <p class="relative mx-auto mt-3 max-w-xs text-lg leading-relaxed">
+        Tu presencia es muy importante para mí. Por favor confírmame por WhatsApp.
+      </p>
+      <a
+        href={waLink}
+        target="_blank"
+        rel="noopener"
+        class="fondo-oro relative mt-7 inline-flex items-center gap-2 rounded-full px-7 py-3.5 font-caps text-sm tracking-[0.15em] text-blanco uppercase shadow-lg shadow-oro/40 transition hover:-translate-y-0.5 hover:shadow-xl"
+      >
+        <Icono nombre="whatsapp" class="size-5" />
+        Confirmar aquí
+      </a>
+      <p class="relative mt-3 font-caps text-xs tracking-[0.15em] text-tinta-suave">{evento.whatsapp.visible}</p>
+    </section>
+
+    <!-- ============ CIERRE ============ -->
+    <section class="revelar relative px-8 pt-14 pb-20 text-center">
+      <Flores posicion="abajo-izq" class="w-36 opacity-90" />
+      <Flores posicion="abajo-der" class="w-36 opacity-90" />
+      {
+        evento.mensajeCierre.map((p) => (
+          <p class="relative mx-auto mb-4 max-w-sm text-xl leading-relaxed italic">{p}</p>
+        ))
+      }
+      <p class="relative mt-6"><span class="titulo-script texto-oro text-6xl">¡Te espero!</span></p>
+      <div class="relative mx-auto mt-8 w-3/4 border border-oro p-1.5 shadow-lg">
+        <Image src={foto6} alt={alt} widths={[400, 800]} sizes="360px" class="aspect-[4/5] w-full object-cover" />
+      </div>
+      <p class="relative mt-8 font-script text-4xl text-viejo-oscuro">{evento.quinceanera}</p>
+      <p class="relative etiqueta">XV · {evento.fecha.dia} · 12 · {evento.fecha.anio}</p>
+    </section>
+  </main>
+
+  <!-- Visor de fotos -->
+  <dialog
+    id="visor"
+    class="m-auto max-h-[92vh] max-w-[92vw] bg-transparent p-0 backdrop:bg-[#2a1a1c]/85 backdrop:backdrop-blur-sm"
+  >
+    <form method="dialog">
+      <button class="absolute top-2 right-3 z-10 font-serif text-4xl text-blanco drop-shadow" aria-label="Cerrar">×</button>
+    </form>
+    <img id="visor-img" src="" alt="" class="max-h-[90vh] w-auto rounded-md object-contain" />
+  </dialog>
+</Layout>
+
+<script>
+  // Aparición de secciones al hacer scroll
+  const obs = new IntersectionObserver(
+    (entradas) => {
+      entradas.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.12 },
+  );
+  document.querySelectorAll('.revelar').forEach((el) => obs.observe(el));
+
+  // Visor de la galería
+  const visor = document.getElementById('visor') as HTMLDialogElement | null;
+  const visorImg = document.getElementById('visor-img') as HTMLImageElement | null;
+  document.querySelectorAll<HTMLButtonElement>('.foto-galeria').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const img = btn.querySelector('img');
+      if (!img || !visor || !visorImg) return;
+      visorImg.src = img.currentSrc || img.src;
+      visorImg.alt = img.alt;
+      visor.showModal();
+    });
+  });
+  visor?.addEventListener('click', (e) => {
+    if (e.target === visor) visor.close();
+  });
+</script>

@@ -1,0 +1,24 @@
+---
+// Borde de papel rasgado. Se pone encima de una foto para "cortarla".
+interface Props {
+  lado?: 'abajo' | 'arriba';
+}
+const { lado = 'abajo' } = Astro.props;
+---
+
+<svg
+  class={`pointer-events-none absolute inset-x-0 z-10 h-10 w-full text-papel ${lado === 'abajo' ? '-bottom-px' : '-top-px rotate-180'}`}
+  viewBox="0 0 400 40"
+  preserveAspectRatio="none"
+  aria-hidden="true"
+>
+  <path
+    d="M0 22 L14 18 L26 24 L40 16 L55 21 L68 14 L82 20 L95 17 L110 25 L124 18 L138 22 L150 15 L165 23 L180 19 L194 26 L208 17 L222 21 L236 14 L250 22 L264 18 L278 24 L292 16 L306 22 L320 15 L334 21 L348 18 L362 25 L376 17 L390 22 L400 18 L400 40 L0 40 Z"
+    fill="rgb(255 253 251 / .7)"
+    transform="translate(0 -4)"
+  />
+  <path
+    d="M0 26 L12 22 L28 28 L42 20 L56 26 L70 19 L86 25 L98 21 L112 29 L126 22 L140 27 L152 20 L168 27 L182 23 L196 30 L210 21 L224 26 L238 19 L252 27 L266 22 L280 28 L294 20 L308 26 L322 19 L336 25 L350 22 L364 29 L378 21 L392 26 L400 22 L400 40 L0 40 Z"
+    fill="currentColor"
+  />
+</svg>

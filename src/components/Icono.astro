@@ -1,0 +1,152 @@
+---
+import type { Icono } from '../data/evento';
+
+interface Props {
+  nombre: Icono | 'traje' | 'vestido' | 'sobre' | 'whatsapp' | 'calendario';
+  class?: string;
+}
+const { nombre, class: clase = 'size-10' } = Astro.props;
+---
+
+<svg
+  class={clase}
+  viewBox="0 0 48 48"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  {
+    nombre === 'iglesia' && (
+      <>
+        <path d="M24 4v8M20.5 7.5h7" />
+        <path d="M14 22 24 12l10 10" />
+        <path d="M16 20v22h16V20" />
+        <path d="M8 42V30l8-6M40 42V30l-8-6" />
+        <path d="M5 42h38" />
+        <path d="M21 42v-8a3 3 0 0 1 6 0v8" />
+        <circle cx="24" cy="24.5" r="2.5" />
+      </>
+    )
+  }
+  {
+    nombre === 'copas' && (
+      <>
+        <path d="M11 6h10l-1 10a4 4 0 0 1-8 0L11 6Z" />
+        <path d="M16 20v16M11 36h10" />
+        <path d="M27 9.5l9.7-2.6 1.6 9.9a4 4 0 0 1-7.7 2.1L27 9.5Z" />
+        <path d="M34.6 21l4.1 15.4M34 38l9.6-2.6" />
+        <path d="M22 4l2-2M24 7l3-1M26 2.5l1.2-1" />
+      </>
+    )
+  }
+  {
+    nombre === 'corona' && (
+      <>
+        <path d="M8 34 5 14l10 8 9-13 9 13 10-8-3 20H8Z" />
+        <path d="M8 39h32" />
+        <circle cx="24" cy="26" r="2.5" />
+        <circle cx="15" cy="28" r="1.5" />
+        <circle cx="33" cy="28" r="1.5" />
+        <circle cx="5" cy="13" r="1.6" />
+        <circle cx="24" cy="8" r="1.6" />
+        <circle cx="43" cy="13" r="1.6" />
+      </>
+    )
+  }
+  {
+    nombre === 'vals' && (
+      <>
+        <circle cx="18" cy="8" r="3" />
+        <circle cx="30" cy="10" r="3" />
+        <path d="M18 11v12l-3 19M18 23l3 19" />
+        <path d="M18 14l7 2 3-2" />
+        <path d="M30 13l-2 6-8 23h20L32 19l-2-6" />
+        <path d="M14 15l-4 6" />
+      </>
+    )
+  }
+  {
+    nombre === 'camara' && (
+      <>
+        <rect x="5" y="13" width="38" height="26" rx="4" />
+        <path d="M17 13l3-5h8l3 5" />
+        <circle cx="24" cy="26" r="7.5" />
+        <circle cx="24" cy="26" r="3.5" />
+        <path d="M36 18h2" />
+      </>
+    )
+  }
+  {
+    nombre === 'cena' && (
+      <>
+        <circle cx="24" cy="26" r="12" />
+        <circle cx="24" cy="26" r="7.5" />
+        <path d="M5 8v8a3 3 0 0 0 3 3v21M8 8v8M11 8v8a3 3 0 0 1-3 3" />
+        <path d="M41 40V8c-3 2-4 7-4 13h4" />
+      </>
+    )
+  }
+  {
+    nombre === 'fiesta' && (
+      <>
+        <path d="M24 4v6" />
+        <circle cx="24" cy="23" r="13" />
+        <path d="M11 23h26M24 10c-4.5 3.5-6 8-6 13s1.5 9.5 6 13M24 10c4.5 3.5 6 8 6 13s-1.5 9.5-6 13" />
+        <path d="M13 16h22M13 30h22" />
+        <path d="M7 41l1-3 1 3 3 1-3 1-1 3-1-3-3-1 3-1ZM40 6l.8-2 .8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8Z" />
+      </>
+    )
+  }
+  {
+    nombre === 'traje' && (
+      <>
+        <path d="M17 5l7 7 7-7 9 4 3 34H5L8 9l9-4Z" />
+        <path d="M17 5l-2 10 5 4-3 3 7 21M31 5l2 10-5 4 3 3-7 21" />
+        <path d="M21.5 13.5 24 12l2.5 1.5L24 16l-2.5-2.5Z" />
+        <circle cx="24" cy="27" r=".8" fill="currentColor" />
+        <circle cx="24" cy="33" r=".8" fill="currentColor" />
+      </>
+    )
+  }
+  {
+    nombre === 'vestido' && (
+      <>
+        <path d="M18 4v7M30 4v7" />
+        <path d="M18 11c2 2 10 2 12 0l-1 9H19l-1-9Z" />
+        <path d="M19 20c-3 7-8 14-11 23h32c-3-9-8-16-11-23" />
+        <path d="M19 20h10" />
+        <path d="M17 32c2 3 4 0 7 3s5 0 7-3" />
+      </>
+    )
+  }
+  {
+    nombre === 'sobre' && (
+      <>
+        <rect x="5" y="14" width="38" height="26" rx="2" />
+        <path d="M5 16l19 13 19-13" />
+        <path d="M24 6c-2-3-6-1-4 2.5L24 12l4-3.5c2-3.5-2-5.5-4-2.5Z" fill="currentColor" />
+      </>
+    )
+  }
+  {
+    nombre === 'calendario' && (
+      <>
+        <rect x="6" y="9" width="36" height="32" rx="3" />
+        <path d="M6 17h36M15 5v8M33 5v8" />
+        <path d="M24 35s-7-4.2-7-8.6c0-2.2 1.6-3.9 3.6-3.9 1.4 0 2.6.8 3.4 2 .8-1.2 2-2 3.4-2 2 0 3.6 1.7 3.6 3.9C31 30.8 24 35 24 35Z" />
+      </>
+    )
+  }
+  {
+    nombre === 'whatsapp' && (
+      <path
+        d="M24 5C13.5 5 5 13.4 5 23.8c0 3.6 1 7 2.8 9.9L5 43l9.6-2.7A19 19 0 0 0 24 42.6c10.5 0 19-8.4 19-18.8S34.5 5 24 5Zm9.4 25.4c-.4 1.1-2.3 2.2-3.2 2.3-.8.1-1.9.2-3-.2-.7-.2-1.6-.5-2.8-1-4.9-2.1-8.1-7-8.3-7.3-.2-.3-2-2.6-2-5s1.3-3.6 1.7-4.1c.4-.5 1-.6 1.3-.6h.9c.3 0 .7-.1 1.1.8.4 1 1.4 3.3 1.5 3.6.1.2.2.5 0 .8-.1.3-.2.5-.4.8l-.6.7c-.2.2-.4.4-.2.8.2.4 1.1 1.8 2.3 2.9 1.6 1.4 2.9 1.8 3.3 2 .4.2.7.2.9-.1.3-.3 1.1-1.2 1.3-1.6.3-.4.6-.4 1-.2.4.1 2.5 1.2 3 1.4.4.2.7.3.8.5.1.2.1 1.2-.3 2.3Z"
+        fill="currentColor"
+        stroke="none"
+      />
+    )
+  }
+</svg>

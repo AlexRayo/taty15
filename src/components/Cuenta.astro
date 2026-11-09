@@ -1,0 +1,59 @@
+---
+import { evento } from '../data/evento';
+const unidades = [
+  ['dias', 'Días'],
+  ['horas', 'Horas'],
+  ['minutos', 'Minutos'],
+  ['segundos', 'Segundos'],
+];
+---
+
+<div id="cuenta" data-fecha={evento.fechaISO} class="text-center">
+  <p class="titulo-script texto-oro text-4xl">Faltan</p>
+  <div class="mt-3 flex items-start justify-center gap-2 sm:gap-3" role="timer" aria-live="off">
+    {
+      unidades.map(([clave, texto], i) => (
+        <>
+          {i > 0 && <span class="pt-2 font-serif text-3xl text-oro">:</span>}
+          <div class="w-[4.2rem] rounded-xl border border-oro/30 bg-blanco/70 py-3 shadow-sm">
+            <span data-u={clave} class="block font-serif text-4xl leading-none font-medium text-viejo-oscuro tabular-nums">
+              00
+            </span>
+            <span class="mt-1 block font-caps text-[0.55rem] tracking-[0.15em] text-tinta-suave uppercase">{texto}</span>
+          </div>
+        </>
+      ))
+    }
+  </div>
+  <p data-fin class="mt-3 hidden font-script text-3xl text-viejo">¡Llegó el gran día!</p>
+</div>
+
+<script>
+  const caja = document.getElementById('cuenta');
+  if (caja) {
+    const meta = new Date(caja.dataset.fecha ?? '').getTime();
+    const campo = (u: string) => caja.querySelector<HTMLElement>(`[data-u="${u}"]`);
+    const el = {
+      dias: campo('dias'),
+      horas: campo('horas'),
+      minutos: campo('minutos'),
+      segundos: campo('segundos'),
+    };
+    const dos = (n: number) => String(n).padStart(2, '0');
+
+    const tick = () => {
+      const resta = Math.max(0, meta - Date.now());
+      const s = Math.floor(resta / 1000);
+      if (el.dias) el.dias.textContent = dos(Math.floor(s / 86400));
+      if (el.horas) el.horas.textContent = dos(Math.floor((s % 86400) / 3600));
+      if (el.minutos) el.minutos.textContent = dos(Math.floor((s % 3600) / 60));
+      if (el.segundos) el.segundos.textContent = dos(s % 60);
+      if (resta === 0) {
+        caja.querySelector('[data-fin]')?.classList.remove('hidden');
+        window.clearInterval(id);
+      }
+    };
+    const id = window.setInterval(tick, 1000);
+    tick();
+  }
+</script>

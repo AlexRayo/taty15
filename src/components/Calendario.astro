@@ -1,0 +1,42 @@
+---
+import { evento } from '../data/evento';
+
+const { dia, anio } = evento.fecha;
+const mesIndice = new Date(evento.fechaISO).getUTCMonth();
+const primerDia = new Date(Date.UTC(anio, mesIndice, 1)).getUTCDay(); // 0 = domingo
+const diasMes = new Date(Date.UTC(anio, mesIndice + 1, 0)).getUTCDate();
+
+const celdas: (number | null)[] = [
+  ...Array.from({ length: primerDia }, () => null),
+  ...Array.from({ length: diasMes }, (_, i) => i + 1),
+];
+const encabezado = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
+---
+
+<div class="mx-auto w-full max-w-xs">
+  <p class="text-center font-caps text-2xl tracking-[0.25em] text-viejo uppercase">{evento.fecha.mes}</p>
+  <div class="mt-4 grid grid-cols-7 border-b border-viejo/40 pb-2 text-center font-caps text-xs text-tinta-suave">
+    {encabezado.map((d) => <span>{d}</span>)}
+  </div>
+  <div class="mt-3 grid grid-cols-7 gap-y-2 text-center text-lg">
+    {
+      celdas.map((n, i) =>
+        n === null ? (
+          <span />
+        ) : n === dia ? (
+          <span class="relative grid place-items-center" aria-label={`Día ${n}, el gran día`}>
+            <svg viewBox="0 0 24 24" class="absolute size-11 text-chicle drop-shadow-sm" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M12 21s-8-4.9-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6.1-8 11-8 11Z"
+              />
+            </svg>
+            <span class="relative font-semibold text-viejo-oscuro">{n}</span>
+          </span>
+        ) : (
+          <span class={i % 7 === 0 ? 'font-semibold text-tinta' : 'text-tinta-suave'}>{n}</span>
+        ),
+      )
+    }
+  </div>
+</div>

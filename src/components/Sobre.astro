@@ -1,0 +1,145 @@
+---
+// Pantalla de entrada: el invitado toca el sello para abrir el sobre.
+import { evento } from '../data/evento';
+---
+
+<div
+  id="intro"
+  class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-8 overflow-hidden bg-viejo px-4 transition-opacity duration-1000"
+>
+  <div class="acuarela -top-20 -left-20 size-72 bg-chicle"></div>
+  <div class="acuarela -right-24 -bottom-24 size-80 bg-champagne"></div>
+  <div class="acuarela top-1/3 right-1/4 size-40 bg-chicle-claro opacity-30"></div>
+
+  <div class="intro-texto relative text-center text-blanco transition-opacity duration-500">
+    <p class="font-caps text-xs tracking-[0.4em] uppercase opacity-90">Mis XV Años</p>
+    <p class="mt-2 font-script text-5xl drop-shadow-sm">{evento.quinceanera}</p>
+  </div>
+
+  <div class="sobre relative aspect-[4/3] w-[min(86vw,380px)]">
+    <!-- parte trasera -->
+    <div class="absolute inset-0 rounded-md bg-gradient-to-b from-[#e7a8b4] to-[#d8909e] shadow-2xl"></div>
+
+    <!-- tarjeta interior -->
+    <div
+      class="carta papel absolute inset-x-[6%] top-[6%] bottom-[6%] flex flex-col items-center justify-center rounded-sm text-center shadow-md"
+    >
+      <p class="etiqueta">Estás invitado</p>
+      <p class="font-script text-4xl texto-oro">{evento.quinceanera}</p>
+      <p class="font-caps text-sm tracking-[0.3em] text-viejo">XV</p>
+    </div>
+
+    <!-- bolsillo frontal -->
+    <div class="frente absolute inset-0 rounded-md"></div>
+
+    <!-- solapa -->
+    <div class="solapa absolute inset-x-0 top-0 h-[62%]"></div>
+
+    <!-- sello de cera -->
+    <button
+      id="sello"
+      type="button"
+      aria-label="Abrir la invitación"
+      class="sello absolute top-[62%] left-1/2 z-20 grid size-20 -translate-x-1/2 -translate-y-1/2 cursor-pointer place-items-center rounded-full transition duration-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blanco"
+    >
+      <span class="font-script text-4xl text-[#7d4a3f]/80 drop-shadow-[0_1px_0_rgba(255,255,255,.4)]">
+        {evento.monograma}
+      </span>
+    </button>
+  </div>
+
+  <p class="intro-texto relative animate-pulse font-caps text-xs tracking-[0.3em] text-blanco uppercase transition-opacity duration-500">
+    Toca el sello para abrir
+  </p>
+</div>
+
+<style>
+  .sobre {
+    perspective: 1200px;
+  }
+  .frente {
+    z-index: 3;
+    clip-path: polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%);
+    background:
+      linear-gradient(to top right, transparent 49.6%, rgb(0 0 0 / 0.05) 50%, transparent 50.4%),
+      linear-gradient(to top left, transparent 49.6%, rgb(0 0 0 / 0.05) 50%, transparent 50.4%),
+      linear-gradient(180deg, #f6c3cc, #eeb0bc);
+  }
+  .solapa {
+    z-index: 4;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    background: linear-gradient(180deg, #f1b7c2, #e49fad);
+    transform-origin: top center;
+    transition:
+      transform 0.8s cubic-bezier(0.6, 0, 0.3, 1),
+      z-index 0s 0.4s;
+    filter: drop-shadow(0 2px 2px rgb(0 0 0 / 0.08));
+  }
+  .carta {
+    z-index: 2;
+    transition: transform 1s cubic-bezier(0.3, 0.7, 0.3, 1) 0.7s;
+  }
+  .sello {
+    background:
+      radial-gradient(circle at 35% 30%, #f3d2c2 0%, transparent 35%),
+      radial-gradient(circle, #d9a28d 0%, #c9927c 55%, #a8705c 100%);
+    box-shadow:
+      0 4px 10px rgb(0 0 0 / 0.25),
+      inset 0 0 0 4px rgb(168 112 92 / 0.45),
+      inset 0 0 0 7px rgb(243 210 194 / 0.35);
+    animation: latido 2.4s ease-in-out infinite;
+  }
+  .sello:hover {
+    filter: brightness(1.06);
+  }
+
+  /* Abierto */
+  #intro.abierto .sello {
+    opacity: 0;
+    scale: 1.4;
+    animation: none;
+    pointer-events: none;
+  }
+  #intro.abierto .solapa {
+    transform: rotateX(180deg);
+    z-index: 1;
+  }
+  #intro.abierto .carta {
+    transform: translateY(-72%);
+  }
+  #intro.abierto .intro-texto {
+    opacity: 0;
+  }
+  #intro.saliendo {
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .solapa,
+    .carta {
+      transition-duration: 0.01s;
+      transition-delay: 0s;
+    }
+  }
+</style>
+
+<script>
+  const intro = document.getElementById('intro');
+  const sello = document.getElementById('sello');
+  const reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  sello?.addEventListener('click', () => {
+    if (!intro) return;
+    intro.classList.add('abierto');
+    window.setTimeout(
+      () => {
+        intro.classList.add('saliendo');
+        document.body.classList.remove('bloqueado');
+        window.scrollTo({ top: 0 });
+        window.dispatchEvent(new Event('invitacion-abierta'));
+      },
+      reducido ? 200 : 2100,
+    );
+    window.setTimeout(() => intro.remove(), reducido ? 400 : 3100);
+  });
+</script>

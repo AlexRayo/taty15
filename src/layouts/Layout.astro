@@ -1,0 +1,39 @@
+---
+import '../styles/global.css';
+import { getImage } from 'astro:assets';
+import portada from '../assets/photos/tatiana-1.jpg';
+import { evento } from '../data/evento';
+
+const titulo = `Mis XV Años · ${evento.quinceanera}`;
+const descripcion = `Te invito a celebrar mis XV años el ${evento.fecha.diaSemana.toLowerCase()} ${evento.fecha.dia} de ${evento.fecha.mes.toLowerCase()} de ${evento.fecha.anio}.`;
+const og = await getImage({ src: portada, width: 1200, format: 'jpg' });
+const ogUrl = new URL(og.src, Astro.site ?? Astro.url).href;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#c48791" />
+    <title>{titulo}</title>
+    <meta name="description" content={descripcion} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:image" content={ogUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bloqueado">
+    <slot />
+  </body>
+</html>

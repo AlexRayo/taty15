@@ -1,0 +1,146 @@
+@import 'tailwindcss';
+
+/* Paleta "Rosa cálido glam" */
+@theme {
+  --color-chicle: #f9c9d1;
+  --color-chicle-claro: #fde8ec;
+  --color-viejo: #c48791;
+  --color-viejo-oscuro: #9e5f6b;
+  --color-blanco: #fffdfb;
+  --color-papel: #fbf6f1;
+  --color-champagne: #e9c7b4;
+  --color-rosegold: #c9927c;
+  --color-oro: #c9a14a;
+  --color-oro-claro: #ead18d;
+  --color-oro-oscuro: #9c7a2c;
+  --color-tinta: #5b3d43;
+  --color-tinta-suave: #8a6a70;
+
+  --font-script: 'Great Vibes', cursive;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-caps: 'Cinzel', 'Cormorant Garamond', serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-viejo font-serif text-tinta antialiased;
+    /* Fondo exterior (en pantallas anchas la tarjeta queda centrada) */
+    background-image:
+      radial-gradient(circle at 20% 10%, rgb(249 201 209 / 0.55), transparent 45%),
+      radial-gradient(circle at 85% 80%, rgb(233 199 180 / 0.6), transparent 50%);
+    background-attachment: fixed;
+  }
+
+  body.bloqueado {
+    overflow: hidden;
+  }
+}
+
+@layer components {
+  /* Textura de papel */
+  .papel {
+    background-color: var(--color-papel);
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.3 0 0 0 0 0.3 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Texto dorado metálico */
+  .texto-oro {
+    background: linear-gradient(
+      100deg,
+      var(--color-oro-oscuro) 0%,
+      var(--color-oro) 25%,
+      var(--color-oro-claro) 50%,
+      var(--color-oro) 75%,
+      var(--color-oro-oscuro) 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: brillo 6s linear infinite;
+  }
+
+  .fondo-oro {
+    background: linear-gradient(
+      120deg,
+      var(--color-oro-oscuro),
+      var(--color-oro) 30%,
+      var(--color-oro-claro) 50%,
+      var(--color-oro) 70%,
+      var(--color-oro-oscuro)
+    );
+  }
+
+  .etiqueta {
+    @apply font-caps text-[0.7rem] tracking-[0.3em] uppercase text-tinta-suave;
+  }
+
+  .titulo-script {
+    @apply font-script text-5xl leading-tight;
+    padding: 0.1em 0.15em;
+  }
+
+  /* Manchas de acuarela */
+  .acuarela {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(40px);
+    pointer-events: none;
+    opacity: 0.55;
+  }
+
+  /* Aparición al hacer scroll */
+  .revelar {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.9s ease,
+      transform 0.9s ease;
+  }
+  .revelar.visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes brillo {
+  to {
+    background-position: -200% center;
+  }
+}
+
+@keyframes flotar {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes latido {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .revelar {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .texto-oro {
+    animation: none;
+  }
+}
