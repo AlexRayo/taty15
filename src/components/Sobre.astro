@@ -42,9 +42,17 @@ import { evento } from '../data/evento';
       aria-label="Abrir la invitación"
       class="sello absolute top-[62%] left-1/2 z-20 grid size-20 -translate-x-1/2 -translate-y-1/2 cursor-pointer place-items-center rounded-full transition duration-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blanco"
     >
-      <span class="font-script text-4xl text-[#7d4a3f]/80 drop-shadow-[0_1px_0_rgba(255,255,255,.4)]">
-        {evento.monograma}
-      </span>
+      <svg viewBox="0 0 80 80" class="size-full" aria-hidden="true">
+        <text
+          x="30.2"
+          y="45.3"
+          text-anchor="middle"
+          dominant-baseline="central"
+          class="monograma font-script"
+          font-size="40"
+          fill="rgb(125 74 63 / .8)">{evento.monograma}</text
+        >
+      </svg>
     </button>
   </div>
 

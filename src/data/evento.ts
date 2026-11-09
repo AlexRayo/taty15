@@ -33,15 +33,17 @@ export const evento = {
   lugares: [
     {
       titulo: 'Misa de acción de gracias',
-      lugar: 'Iglesia del Colegio Regnum Dei School',
+      lugar: 'Convento Nuestra Señora de la Caridad del Cobre',
       hora: '5:00 PM',
       icono: 'iglesia',
+      mapa: 'https://maps.app.goo.gl/mF5dvtAv2ynupNdV8',
     },
     {
       titulo: 'Recepción',
       lugar: 'Quinta Ebenezer',
       hora: '6:20 PM',
       icono: 'copas',
+      mapa: 'https://maps.app.goo.gl/3Fr7UY6Fg3HdbEdU9',
     },
   ],
 
