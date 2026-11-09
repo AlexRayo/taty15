@@ -12,15 +12,10 @@ import Cuenta from '../components/Cuenta.astro';
 import Calendario from '../components/Calendario.astro';
 import { evento } from '../data/evento';
 
-import foto1 from '../assets/photos/tatiana-1.jpg';
-import foto2 from '../assets/photos/tatiana-2.jpg';
-import foto3 from '../assets/photos/tatiana-3.jpg';
-import foto4 from '../assets/photos/tatiana-4.jpg';
+import portada from '../assets/photos/portada.png';
 import foto5 from '../assets/photos/tatiana-5.jpg';
 import foto6 from '../assets/photos/tatiana-6.jpg';
-import foto7 from '../assets/photos/tatiana-7.jpg';
 
-const galeria = [foto3, foto2, foto4, foto7];
 const alt = `${evento.quinceanera} en su sesión de fotos de XV años`;
 const waLink = `https://wa.me/${evento.whatsapp.numero}?text=${encodeURIComponent(evento.whatsapp.mensaje)}`;
 ---
@@ -33,13 +28,13 @@ const waLink = `https://wa.me/${evento.whatsapp.numero}?text=${encodeURIComponen
   <main class="papel relative mx-auto min-h-screen max-w-[480px] overflow-hidden shadow-2xl shadow-viejo-oscuro/40">
     <!-- ============ PORTADA ============ -->
     <header class="relative">
-      <div class="relative aspect-[4/4.6] overflow-hidden">
+      <div class="relative aspect-[4/5] overflow-hidden">
         <Image
-          src={foto1}
+          src={portada}
           alt={alt}
           widths={[480, 768, 960]}
           sizes="(max-width: 480px) 100vw, 480px"
-          class="portada size-full object-cover object-top"
+          class="portada size-full object-cover"
           loading="eager"
           fetchpriority="high"
         />
@@ -196,30 +191,6 @@ const waLink = `https://wa.me/${evento.whatsapp.numero}?text=${encodeURIComponen
       </ol>
     </section>
 
-    <!-- ============ GALERÍA ============ -->
-    <section class="revelar relative px-5 pb-14">
-      <Adorno class="mb-8" />
-      <div class="grid grid-cols-2 items-start gap-3">
-        {
-          galeria.map((f, i) => (
-            <button
-              type="button"
-              class={`foto-galeria overflow-hidden rounded-lg shadow-md ring-1 ring-oro/30 ${i % 2 === 1 ? 'mt-8' : ''}`}
-              aria-label="Ver foto en grande"
-            >
-              <Image
-                src={f}
-                alt={alt}
-                widths={[300, 600, 1000]}
-                sizes="(max-width: 480px) 50vw, 230px"
-                class="block aspect-[4/5] w-full object-cover transition duration-700 hover:scale-105"
-              />
-            </button>
-          ))
-        }
-      </div>
-    </section>
-
     <!-- ============ VESTIMENTA ============ -->
     <section class="revelar relative bg-chicle-claro/50 px-8 py-14 text-center">
       <Flores posicion="abajo-der" class="w-32 opacity-80" />
@@ -302,17 +273,6 @@ const waLink = `https://wa.me/${evento.whatsapp.numero}?text=${encodeURIComponen
       <p class="relative etiqueta">XV · {evento.fecha.dia} · 12 · {evento.fecha.anio}</p>
     </section>
   </main>
-
-  <!-- Visor de fotos -->
-  <dialog
-    id="visor"
-    class="m-auto max-h-[92vh] max-w-[92vw] bg-transparent p-0 backdrop:bg-[#2a1a1c]/85 backdrop:backdrop-blur-sm"
-  >
-    <form method="dialog">
-      <button class="absolute top-2 right-3 z-10 font-serif text-4xl text-blanco drop-shadow" aria-label="Cerrar">×</button>
-    </form>
-    <img id="visor-img" src="" alt="" class="max-h-[90vh] w-auto rounded-md object-contain" />
-  </dialog>
 </Layout>
 
 <script>
@@ -329,20 +289,4 @@ const waLink = `https://wa.me/${evento.whatsapp.numero}?text=${encodeURIComponen
     { threshold: 0.12 },
   );
   document.querySelectorAll('.revelar').forEach((el) => obs.observe(el));
-
-  // Visor de la galería
-  const visor = document.getElementById('visor') as HTMLDialogElement | null;
-  const visorImg = document.getElementById('visor-img') as HTMLImageElement | null;
-  document.querySelectorAll<HTMLButtonElement>('.foto-galeria').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const img = btn.querySelector('img');
-      if (!img || !visor || !visorImg) return;
-      visorImg.src = img.currentSrc || img.src;
-      visorImg.alt = img.alt;
-      visor.showModal();
-    });
-  });
-  visor?.addEventListener('click', (e) => {
-    if (e.target === visor) visor.close();
-  });
 </script>
